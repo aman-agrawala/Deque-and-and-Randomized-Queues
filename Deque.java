@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
     
@@ -6,7 +7,7 @@ public class Deque<Item> implements Iterable<Item> {
     private  Node last;
     private int size;
     
-    private class Node<Item>
+    private class Node
     {
         Item item;
         Node next;
@@ -51,16 +52,16 @@ public class Deque<Item> implements Iterable<Item> {
     {
         Item value = first.item;
         first = first.next;
-        return value;
         size--;
+        return value;
     }
     
     public Item removeLast()
     {
         Item item = last.item;
         last = last.next;
-        return item;
         size--;
+        return item;
     }
     
     public Iterator<Item> iterator()
@@ -92,6 +93,16 @@ public class Deque<Item> implements Iterable<Item> {
     
     public static void main(String[] args)
     {
-        Deque test = new Deque();
+        Deque<String> test = new Deque<String>();
+        test.addFirst("lol");
+        test.addLast("test");
+        test.addFirst("kk");
+        test.addLast("troll");
+        for(String s: test)
+        {
+            System.out.print(s);
+        }
+        String value = test.removeFirst();
+        System.out.print(value);
     }
 }
