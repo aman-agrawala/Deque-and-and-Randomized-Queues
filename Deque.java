@@ -10,13 +10,14 @@ public class Deque<Item> implements Iterable<Item> {
     private class Node
     {
         Item item;
-        Node next;
+        Node forward;
+        Node backward;
     }
        
     public Deque() // create empty deque
     {
         first = null;
-        last = null;
+        last = first;
         size = 0;
     }
     
@@ -35,8 +36,13 @@ public class Deque<Item> implements Iterable<Item> {
         Node old = first;
         first = new Node();
         first.item = item;
-        first.next = old;
+        first.forward = old;
+        first.backward = null;
         size++;
+        if(size == 1)
+        {
+            last = first;
+        }
     }
     
     public void addLast(Item item)
@@ -44,14 +50,23 @@ public class Deque<Item> implements Iterable<Item> {
         Node old = last;
         last = new Node();
         last.item = item;
-        last.next = old;
+        last.backward = old;
+        last.forward = null;
         size++;
+        if(size == 1)
+        {
+            first = last;
+        }
+        else
+        {
+            old.forward = last;
+        }
     }
     
     public Item removeFirst()
     {
         Item value = first.item;
-        first = first.next;
+        first = first.forward;
         size--;
         return value;
     }
@@ -59,7 +74,7 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeLast()
     {
         Item item = last.item;
-        last = last.next;
+        last = last.backward;
         size--;
         return item;
     }
@@ -86,7 +101,7 @@ public class Deque<Item> implements Iterable<Item> {
         public Item next()
         {
             Item item = current.item;
-            current = current.next;
+            current = current.forward;
             return item;
         }
     }
@@ -94,15 +109,15 @@ public class Deque<Item> implements Iterable<Item> {
     public static void main(String[] args)
     {
         Deque<String> test = new Deque<String>();
-        test.addFirst("lol");
-        test.addLast("test");
-        test.addFirst("kk");
-        test.addLast("troll");
+        test.addLast("to");
+        test.addLast("be");
+        test.addLast("or");
+        test.addLast("not");
         for(String s: test)
         {
             System.out.print(s);
         }
-        String value = test.removeFirst();
-        System.out.print(value);
+        //String value = test.removeFirst();
+        //System.out.print(value);
     }
 }
