@@ -100,9 +100,16 @@ public class RandomizedQueue<Item> implements Iterable<Item>
     {
         private int randLoc = 0;
         //private int covered = 0;
-        private Item[] copy = q;
         private int copySize = N;
-
+        private Item[] copy = (Item[]) new Object[copySize];
+        
+        private RandomIterator()
+        {
+            for(int i = 0; i<copySize;i++)
+            {
+                copy[i] = q[i];
+            }
+        }
         
         public boolean hasNext()
         {
@@ -151,6 +158,10 @@ public class RandomizedQueue<Item> implements Iterable<Item>
          test2.enqueue("cool");
          for(String s: test2)
          {
+             for(String s2: test2)
+             {
+                 System.out.print(s2 += " ");
+             }
              System.out.print(s += " ");
          }
          
