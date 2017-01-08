@@ -7,12 +7,15 @@ import java.lang.UnsupportedOperationException;
 public class RandomizedQueue<Item> implements Iterable<Item>
 {
     private Item[] q;
-    private int N = 0;
+    private int N;
+    private int lastLoc;
    // private int startLoc = 9;
         
     public RandomizedQueue()
     {
-        q = (Item[]) new Object[1];
+        q = (Item[]) new Object[2];
+        N = 0;
+        lastLoc = 0;
     }
     
     public boolean isEmpty()
@@ -46,6 +49,7 @@ public class RandomizedQueue<Item> implements Iterable<Item>
             resize(2*q.length);
         }
         q[N++] = item;
+        lastLoc = N;
     }
     
     public Item dequeue()
@@ -97,7 +101,8 @@ public class RandomizedQueue<Item> implements Iterable<Item>
         private int randLoc = 0;
         //private int covered = 0;
         private Item[] copy = q;
-        private int copySize = copy.length;
+        private int copySize = N;
+
         
         public boolean hasNext()
         {
@@ -115,13 +120,13 @@ public class RandomizedQueue<Item> implements Iterable<Item>
             {
                 throw new NoSuchElementException();
             }
-            randLoc = StdRandom.uniform(N);
-            Item currentItem = q[randLoc];
+            randLoc = StdRandom.uniform(copySize);
+            Item currentItem = copy[randLoc];
             if(randLoc != copySize-1)
             {
-                q[randLoc] = q[copySize-1];
+                copy[randLoc] = copy[copySize-1];
             }
-            q[copySize-1] = null;
+            copy[copySize-1] = null;
             copySize--;
             return currentItem;
         }
@@ -141,11 +146,13 @@ public class RandomizedQueue<Item> implements Iterable<Item>
          test2.enqueue("be");
          test2.enqueue("or");
          test2.enqueue("not");
-         test2.enqueue("to2");
-         test2.enqueue("lol2");
-         test2.enqueue("roll2");
-         test2.dequeue();
-         test2.dequeue();
+         test2.enqueue("aman");
+         test2.enqueue("agra");
+         test2.enqueue("cool");
+         for(String s: test2)
+         {
+             System.out.print(s += " ");
+         }
          
     }
 }

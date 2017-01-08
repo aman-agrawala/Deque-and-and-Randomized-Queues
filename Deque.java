@@ -84,12 +84,19 @@ public class Deque<Item> implements Iterable<Item> {
         {
             throw new NoSuchElementException();
         }
-        Item value = first.item;
-        first = first.forward;
-        if(first != null)
+        
+        Item value = first.item; // take the item from first
+        
+        if(size() == 1)
         {
-            first.backward = null;
+            first = null;
+            last = first;
+            size--;
+            return value;
         }
+        
+        first = first.forward;
+        first.backward = null;
         size--;
         if(size() == 0)
         {
@@ -104,18 +111,24 @@ public class Deque<Item> implements Iterable<Item> {
         {
             throw new NoSuchElementException();
         }
-        Item item = last.item;
-        last = last.backward;
-        if(last != null)
+        
+        Item value = last.item;
+        
+        if(size() == 1)
         {
-            last.forward = null;   
+            last = null;
+            first = last;
+            size--;
+            return value;
         }
+        last = last.backward;
+        last.forward = null;
         size--;
         if(size() == 0)
         {
             first = null;
         }
-        return item;
+        return value;
         
 
     }
@@ -157,12 +170,11 @@ public class Deque<Item> implements Iterable<Item> {
     
     public static void main(String[] args)
     {
-        Deque<String> test = new Deque<String>();
-        test.addFirst("to");
-        test.addFirst("be");
-        test.removeLast();
-        test.removeLast();
-        test.removeLast();
+//        Deque<String> test = new Deque<String>();
+//        test.addFirst("to");
+//        test.addFirst("be");
+//        test.removeLast();
+//        test.removeLast();
         
 //        test.addLast("not");
 //        for(String s: test)
@@ -179,19 +191,22 @@ public class Deque<Item> implements Iterable<Item> {
         //String value = test.removeFirst();
         //System.out.print(value);
         
-//        Deque<Integer> test10 = new Deque<Integer>();
-//        test10.addFirst(1);
-//        test10.addLast(2);
+        Deque<Integer> test10 = new Deque<Integer>();
+        test10.addFirst(1);
+        test10.removeFirst();
+        test10.addLast(2);
+        System.out.print(test10.removeLast());
 //        test10.addFirst(3);
 //        test10.addFirst(4);
 //        test10.removeFirst();
 //        test10.addLast(6);
 //        test10.removeFirst();
 //        test10.addFirst(8);
-//        test10.removeLast();
-//        for(Integer s: test10)
-//        {
-//            System.out.print(s);
-//        }
+
+        
+        for(Integer s: test10)
+        {
+            System.out.print(s);
+        }
     }
 }
